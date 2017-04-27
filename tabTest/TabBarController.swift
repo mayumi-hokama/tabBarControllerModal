@@ -8,8 +8,8 @@
 
 import UIKit
 
-enum TabBarItem {
-    case simulation
+enum TabBarItem: Int {
+    case simulation = 1
     case chat
     case info
 }
