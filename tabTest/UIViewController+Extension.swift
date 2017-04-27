@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FontAwesome_swift
 
 extension UIViewController {
     
@@ -19,16 +20,14 @@ extension UIViewController {
         
         switch type {
         case .simulation:
-            image = UIImage(named: "bt_a_00")
-            selectedImage = UIImage(named: "bt_a_01")
+            image = UIImage.fontAwesomeIcon(name: .github, textColor: UIColor.black, size: CGSize(width: 30, height: 30))
+            selectedImage = UIImage.fontAwesomeIcon(name: .github, textColor: UIColor.black, size: CGSize(width: 30, height: 30))
             tag = TabBarItem.simulation.rawValue
         case .chat:
-            image = UIImage(named: "bt_a_00")
-            selectedImage = UIImage(named: "bt_a_01")
-            tag = TabBarItem.chat.rawValue
+            break
         case .info:
-            image = UIImage(named: "bt_a_00")
-            selectedImage = UIImage(named: "bt_a_01")
+            image = UIImage.fontAwesomeIcon(name: .android, textColor: UIColor.black, size: CGSize(width: 30, height: 30))
+            selectedImage = UIImage.fontAwesomeIcon(name: .android, textColor: UIColor.black, size: CGSize(width: 30, height: 30))
             tag = TabBarItem.info.rawValue
         }
         
@@ -41,6 +40,5 @@ extension UIViewController {
         // 文字列は透過して非表示にする
         UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.clear], for: .selected)
         UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.clear], for: UIControlState())
-        
     }
 }

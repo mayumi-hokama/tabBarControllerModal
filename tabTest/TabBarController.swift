@@ -26,10 +26,9 @@ class TabBarController: UITabBarController {
 
     private lazy var navigationController2: UINavigationController = {
         let vc = ChatBaseViewController()
-        vc.configureTabBarItem(.chat)
+        //vc.configureTabBarItem(.chat)
         return UINavigationController(rootViewController: vc)
     }()
-
 
     private lazy var navigationController3: UINavigationController = {
         var sb = UIStoryboard(name: "Info", bundle: Bundle.main)
@@ -44,6 +43,8 @@ class TabBarController: UITabBarController {
         // sb読み込み
         self.setViewControllers((NSArray(objects: navigationController1, navigationController2, navigationController3) as! [UIViewController]), animated: false)
         
+        // チャットボタンの生成
+        makeChatButton()
     }
 
     override func didReceiveMemoryWarning() {
@@ -61,25 +62,37 @@ class TabBarController: UITabBarController {
         // Pass the selected object to the new view controller.
     }
     */
-
+    
+    func makeChatButton() {
+        
+        let image = UIImage(named: "button")!
+        let selectedImage = UIImage.fontAwesomeIcon(name: .amazon, textColor: UIColor.black, size: CGSize(width: 30, height: 30))
+        
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height))
+        button.setBackgroundImage(image, for: .normal)
+        button.setBackgroundImage(selectedImage, for: .selected)
+        
+        var center:CGPoint = self.tabBar.center;
+        
+        center.y = center.y - 50/2.0;
+        
+        button.center = center;
+        
+        button.addTarget(self, action: #selector(chatButtonAction(_:)), for: .touchUpInside)
+        
+        view.addSubview(button)
+        
+    }
+    
+    func chatButtonAction(_ sender: UIButton) {
+        if let current = self.selectedViewController {
+            let sb = UIStoryboard(name: "Chat", bundle: Bundle.main)
+            let vc: UIViewController = sb.instantiateInitialViewController()! as! ChatViewController
+            // 選択中VCに対してpresent
+            current.present(vc, animated: true, completion: nil)
+        }
+    }
 }
 
 extension TabBarController: UITabBarControllerDelegate {
-
-    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
-        
-        if let naviVC = viewController as? UINavigationController {
-            if naviVC.topViewController is ChatBaseViewController {
-                // 現在選択中のVCを取得
-                if let current = self.selectedViewController {
-                    let sb = UIStoryboard(name: "Chat", bundle: Bundle.main)
-                    let vc: UIViewController = sb.instantiateInitialViewController()! as! ChatViewController
-                    // 選択中VCに対してpresent
-                    current.present(vc, animated: true, completion: nil)
-                }
-                return false
-            }
-        }
-        return true
-    }
 }
