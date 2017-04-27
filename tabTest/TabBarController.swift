@@ -23,25 +23,37 @@ class TabBarController: UITabBarController {
         return UINavigationController(rootViewController: vc)
     }()
     
-
     private lazy var navigationController2: UINavigationController = {
-        let vc = ChatBaseViewController()
-        //vc.configureTabBarItem(.chat)
+        var sb = UIStoryboard(name: "Simulation", bundle: Bundle.main)
+        let vc: UIViewController = sb.instantiateInitialViewController()! as! SimulationViewController
+        vc.configureTabBarItem(.simulation)
         return UINavigationController(rootViewController: vc)
     }()
 
     private lazy var navigationController3: UINavigationController = {
+        let vc = ChatBaseViewController()
+        return UINavigationController(rootViewController: vc)
+    }()
+    
+    private lazy var navigationController4: UINavigationController = {
         var sb = UIStoryboard(name: "Info", bundle: Bundle.main)
         let vc: UIViewController = sb.instantiateInitialViewController()! as! InfoViewController
         vc.configureTabBarItem(.info)
         return UINavigationController(rootViewController: vc)
     }()
     
+    private lazy var navigationController5: UINavigationController = {
+        var sb = UIStoryboard(name: "Info", bundle: Bundle.main)
+        let vc: UIViewController = sb.instantiateInitialViewController()! as! InfoViewController
+        vc.configureTabBarItem(.info)
+        return UINavigationController(rootViewController: vc)
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.delegate = self
         // sb読み込み
-        self.setViewControllers((NSArray(objects: navigationController1, navigationController2, navigationController3) as! [UIViewController]), animated: false)
+        self.setViewControllers((NSArray(objects: navigationController1, navigationController2, navigationController3, navigationController4, navigationController5) as! [UIViewController]), animated: false)
         
         // チャットボタンの生成
         makeChatButton()
